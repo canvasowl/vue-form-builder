@@ -6,8 +6,10 @@
 
 	<!-- Styles -->
 	<style type="text/css">
+		html,body,.jumbotron{background-color: #41b883 }
+		.container{width: 95%}
 
-		.container{max-width: 750px}
+		.jumbotron{padding: 10px;max-width: 600px; margin: 0 auto; text-align: center}
 
 	</style>
 
@@ -22,16 +24,36 @@
 			<div class="jumbotron">
 			  <h1 class="primary-color">VUE.JS Form Builder!</h1>
 			  <p>This is a form builder created completely with Vue.js. Feel 
-			  free to fork it, scrap it, extend it, imrpove it, but mostly have fun with it</p>
-			  <p><a class="btn btn-primary btn-lg" href="#" role="button">Fork</a></p>
+			  free to fork it, scrap it, extend it, imrpove it, but mostly have fun with it</p>			
 			</div>			
 		</div>
 
 		<!-- FORM BUILDER -->
-		<section class="form-builer"></section>
+		<section class="form-builer col-xs-12 col-sm-6">
+			<div class="form-group">
+				<label>Question Type:</label>
+				<select v-model="preForm.type" class="form-control">
+					<option value="">Select Type</option>
+					<option value="text">Text</option>
+					<option value="textarea">Textarea</option>
+					<option value="dropdown">Dropdown</option>
+				    <option value="radio">Radio</option>
+				    <option value="checkbox">Checkbox</option>
+				</select>				
+			</div>
+
+			<template v-if="preForm.type !== null && preForm.type !== '' && preForm.type !== undefined">
+				<div class="form-group">
+					<label>Questin Name:</label> <input v-model="preForm.label" type="text" class="form-control">
+				</div>
+			</template>
+			<pre><p>{{preForm | json 2}}</p></pre>
+		</section>
+
+
 
 		<!-- RENDER FORM -->
-		<section class="form-render"></section>
+		<section class="form-render col-xs-12 col-sm-6"></section>
 
 	</div>
 </div>
@@ -40,5 +62,6 @@
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/0.12.10/vue.js"></script>
+<script type="text/javascript" src="main.js"></script>
 </body>
 </html>
