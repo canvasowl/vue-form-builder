@@ -8,7 +8,10 @@ var vueForm = new Vue({
 	},
 
 	methods: {
-
+		addToForm: function(){
+			this.form.push(this.preForm);
+			this.preForm = {type: null, label: null, answers: []};
+		}
 	},
 
 });

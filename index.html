@@ -33,7 +33,7 @@
 			<div class="form-group">
 				<label>Question Type:</label>
 				<select v-model="preForm.type" class="form-control">
-					<option value="">Select Type</option>
+					<option value="" selected>Select Type</option>
 					<option value="text">Text</option>
 					<option value="textarea">Textarea</option>
 					<option value="dropdown">Dropdown</option>
@@ -46,14 +46,24 @@
 				<div class="form-group">
 					<label>Questin Name:</label> <input v-model="preForm.label" type="text" class="form-control">
 				</div>
+				<span v-if="preForm.label !== null" v-on="click: addToForm()" class="btn btn-default">Add To Form</span>
 			</template>
-			<pre><p>{{preForm | json 2}}</p></pre>
+
+			<!-- <pre><p>{{preForm | json 2}}</p></pre> -->
 		</section>
 
 
 
 		<!-- RENDER FORM -->
-		<section class="form-render col-xs-12 col-sm-6"></section>
+		<section class="form-render col-xs-12 col-sm-6">
+				<div v-repeat="form">
+					<div class="form-group">
+						<label>{{label}}:</label>
+						<input v-if="type === 'text'" type="text" name="{{label}}" class="form-control">
+					</div>
+				</div>
+				<!-- <pre><p>{{form | json 2}}</p></pre>			 -->
+		</section>
 
 	</div>
 </div>
