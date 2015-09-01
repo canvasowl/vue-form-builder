@@ -11,6 +11,7 @@
 
 		.jumbotron{padding: 10px;max-width: 600px; margin: 0 auto; text-align: center}
 
+		.form-render{background-color: rgba(0,0,0,.2); color: #fff;}
 	</style>
 
 
@@ -44,25 +45,58 @@
 
 			<template v-if="preForm.type !== null && preForm.type !== '' && preForm.type !== undefined">
 				<div class="form-group">
-					<label>Questin Name:</label> <input v-model="preForm.label" type="text" class="form-control">
-				</div>
-				<span v-if="preForm.label !== null" v-on="click: addToForm()" class="btn btn-default">Add To Form</span>
-			</template>
+					<label>Questin Name:</label> 
 
+					<!-- Text | Textarea | Checkbox -->
+					<input v-model="preForm.label" type="text" class="form-control">
+
+					<template v-if="preForm.type === 'dropdown' || preForm.type === 'radio'">						
+						<div class="form-group">
+							<label>Option:</label><input class="form-control" type="text" v-model="option"> 	
+							<span v-on="click: addOption()" class="btn btn-primary">Add Option</span>				
+						</div>					
+						<ol><li v-repeat="preForm.answers">{{$value}}</li></ol>
+					</template>
+				</div>
+				<div class="form-group">
+					<span v-if="preForm.label !== null" v-on="click: addToForm()" class="btn btn-default">Add To Form</span>
+				</div>
+			</template>
 			<!-- <pre><p>{{preForm | json 2}}</p></pre> -->
 		</section>
 
 
 
 		<!-- RENDER FORM -->
-		<section class="form-render col-xs-12 col-sm-6">
+		<section v-if="form.length > 0" class="form-render col-xs-12 col-sm-6">
 				<div v-repeat="form">
 					<div class="form-group">
 						<label>{{label}}:</label>
+						
+						<!-- Text -->
 						<input v-if="type === 'text'" type="text" name="{{label}}" class="form-control">
+						
+						<!-- Textarea -->
+						<textarea v-if="type === 'textarea'" name="{{label}}" class="form-control"></textarea>
+						
+						<!-- Dropdown -->
+						<select v-if="type === 'dropdown'" class="form-control">
+							<option>Select</option>
+							<option v-repeat="answers" value="{{$value}}">{{$value}}</option>
+						</select>
+						
+						<!-- Radio -->
+						<template v-if="type === 'radio'">
+							<br>
+							<span v-repeat="answers">
+								{{label}} <input type="radio" name="{{label}}" value="{{$value}}">								
+							</span>
+						</template>
+						
+						<!-- Checkbox -->
+						<input v-if="type === 'checkbox'" type="checkbox" name="{{label}}">
 					</div>
 				</div>
-				<!-- <pre><p>{{form | json 2}}</p></pre>			 -->
 		</section>
 
 	</div>
